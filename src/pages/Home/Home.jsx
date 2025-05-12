@@ -175,7 +175,7 @@ const Home = () => {
                         filterCountries == null ? (
                             searchTo == "" ? countries.map((country, index) => (index < showCount ? <CountryCard country={country} key={index} /> : null)) : countries.map((country, index) => `${country.name.common}`.toLowerCase().includes(searchTo.toLowerCase()) ? <CountryCard country={country} key={index} /> : null)
                         ) : (
-                            searchTo == "" ? countries.filter((country) => country.region == filterCountries).map((country, index) => (index < showCount ? <CountryCard country={country} key={index} /> : null)) : countries.filter((country) => country.region == filterCountries).map((country, index) => `${country.name.common}`.toLowerCase().includes(searchTo.toLowerCase()) ? <CountryCard country={country} key={index} /> : null)
+                            searchTo == "" ? countries.filter((country) => country.region == filterCountries).map((country, index) => <CountryCard country={country} key={index} />) : countries.filter((country) => country.region == filterCountries).map((country, index) => `${country.name.common}`.toLowerCase().includes(searchTo.toLowerCase()) ? <CountryCard country={country} key={index} /> : null)
                         )
                     )}
                     {searchTo == "" && !filterCountries && <LoadDiv><LoadMoreBtn type='button' onClick={() => setShowCount(showCount + 8)}>Load More</LoadMoreBtn></LoadDiv>}

@@ -155,6 +155,7 @@ const Country = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`https://restcountries.com/v3.1/alpha/${id}`)
       .then(response => response.json())
       .then(data => {
@@ -165,7 +166,7 @@ const Country = () => {
         console.error('Erro ao buscar os países:', error);
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   return (
     <>

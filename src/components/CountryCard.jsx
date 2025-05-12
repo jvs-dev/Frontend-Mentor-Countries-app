@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 const CountryArticle = styled.article`
@@ -50,7 +50,7 @@ const CountryData = styled.p`
 
 const CountryCard = (props) => {
 
-    return (
+    return (        
         <Link to={`/country/${props.country.cca3}`} style={{ textDecoration: "none", color: "unset" }}>
             <CountryArticle>
                 <CountryFlag src={props.country.flags.png} alt="" />
