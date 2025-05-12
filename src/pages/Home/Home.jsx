@@ -9,6 +9,9 @@ flex-direction: column;
 align-items: center;
 width: 100%;
 padding: 30px 20px;
+@media only screen and (min-width: 950px) {
+    padding: 30px 48px;
+}
 `
 
 const SearchLabel = styled.label`
@@ -20,6 +23,9 @@ const SearchLabel = styled.label`
     box-shadow: -2px 1px 16px 7px var(--shadow-color);
     padding: 14px 20px;
     border-radius: 4px;
+    @media only screen and (min-width: 950px) {
+        max-width: 400px;
+    }
     input {
         border: 0px;
         outline-width: 0px;
@@ -46,6 +52,10 @@ const FilterContainer = styled.div`
     justify-content: flex-start;
     width: 100%;
     margin: 50px 0px 0px 0px;
+    @media only screen and (min-width: 950px) {
+        margin: 0px;
+        justify-content: flex-end;
+    }
 `
 
 const Filter = styled.select`    
@@ -62,7 +72,8 @@ const Filter = styled.select`
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.4px;
-    color: var(--Grey-950-Light-Mode-Text);    
+    color: var(--Grey-950-Light-Mode-Text);  
+    cursor: pointer;
 `
 
 const AllCountriesDiv = styled.div`
@@ -72,7 +83,21 @@ const AllCountriesDiv = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 30px;
-    margin: 30px 0px 0px 0px;
+    margin: 40px 0px 0px 0px;
+    @media only screen and (min-width: 950px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 30px;
+    }
+`
+
+const LoadDiv = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 const LoadMoreBtn = styled.button`
@@ -81,6 +106,19 @@ const LoadMoreBtn = styled.button`
     border: 0px;
     outline-width: 0px;
     color: #fff;
+`
+
+const HomeDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;    
+    width: 100%;    
+    @media only screen and (min-width: 950px) {
+        flex-direction: row;
+        align-items: center;        
+        justify-content: space-between;
+    }
 `
 
 const Home = () => {
@@ -115,30 +153,32 @@ const Home = () => {
         <>
             <Header />
             <HomeSection>
-                <SearchLabel htmlFor="">
-                    <ion-icon name="search"></ion-icon>
-                    <input type="text" placeholder='Search for a country...' value={searchTo} onChange={(e) => setSearchTo(e.target.value)} />
-                </SearchLabel>
-                <FilterContainer>
-                    <Filter name="country" id="country" defaultValue="" onChange={(e) => setFilterCountries(e.target.value == "" ? null : e.target.value)}>
-                        <option value="" style={{ display: "none" }} disabled>
-                            Filter by Region
-                        </option>
-                        <option value="">Todos</option>
-                        {regions.map((re) => <option key={re} value={re}>{re}</option>)}
-                    </Filter>
-                </FilterContainer>
+                <HomeDiv>
+                    <SearchLabel>
+                        <ion-icon name="search"></ion-icon>
+                        <input type="text" placeholder='Search for a country...' value={searchTo} onChange={(e) => setSearchTo(e.target.value)} />
+                    </SearchLabel>
+                    <FilterContainer>
+                        <Filter name="country" id="country" defaultValue="" onChange={(e) => setFilterCountries(e.target.value == "" ? null : e.target.value)}>
+                            <option value="" style={{ display: "none" }} disabled>
+                                Filter by Region
+                            </option>
+                            <option value="">Todos</option>
+                            {regions.map((re) => <option key={re} value={re}>{re}</option>)}
+                        </Filter>
+                    </FilterContainer>
+                </HomeDiv>
                 <AllCountriesDiv>
                     {loading ? (
-                        <p disabled>Carregando...</p>
+                        <p style={{ color: "var(--Grey-950-Light-Mode-Text)" }} disabled>Carregando...</p>
                     ) : (
                         filterCountries == null ? (
                             searchTo == "" ? countries.map((country, index) => (index < showCount ? <CountryCard country={country} key={index} /> : null)) : countries.map((country, index) => `${country.name.common}`.toLowerCase().includes(searchTo.toLowerCase()) ? <CountryCard country={country} key={index} /> : null)
                         ) : (
-                            countries.map((country, index) => (filterCountries == country.region ? <CountryCard country={country} key={index} /> : null))
+                            searchTo == "" ? countries.filter((country) => country.region == filterCountries).map((country, index) => (index < showCount ? <CountryCard country={country} key={index} /> : null)) : countries.filter((country) => country.region == filterCountries).map((country, index) => `${country.name.common}`.toLowerCase().includes(searchTo.toLowerCase()) ? <CountryCard country={country} key={index} /> : null)
                         )
                     )}
-                    {!filterCountries && <LoadMoreBtn type='button' onClick={() => setShowCount(showCount + 8)}>Load More</LoadMoreBtn>}
+                    {searchTo == "" && !filterCountries && <LoadDiv><LoadMoreBtn type='button' onClick={() => setShowCount(showCount + 8)}>Load More</LoadMoreBtn></LoadDiv>}
                 </AllCountriesDiv>
             </HomeSection>
         </>

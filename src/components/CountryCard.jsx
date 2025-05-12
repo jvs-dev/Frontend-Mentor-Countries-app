@@ -19,6 +19,10 @@ const CountryFlag = styled.img`
     width: 100%;
     height: auto;
     object-fit: cover;
+    @media only screen and (min-width: 950px) {
+        width: 300px;
+        height: 200px;
+    }
 `
 
 const CountryDataContainer = styled.div`
@@ -45,7 +49,7 @@ const CountryData = styled.p`
 `
 
 const CountryCard = (props) => {
-        
+
     return (
         <Link to={`/country/${props.country.cca3}`} style={{ textDecoration: "none", color: "unset" }}>
             <CountryArticle>

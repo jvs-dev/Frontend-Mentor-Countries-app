@@ -10,6 +10,9 @@ const HeaderStyled = styled.header`
     padding: 35px 20px;
     width: 100%;
     box-shadow: 0px 1px 2px 2px var(--shadow-color);    
+    @media only screen and (min-width: 950px) {
+        padding: 20px 48px;
+    }
 `
 
 const Title = styled.h1`
@@ -29,6 +32,9 @@ const ThemeToggler = styled.button`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    @media only screen and (min-width: 950px) {
+        font-size: 14px;
+    }
     ion-icon {
         margin-right: 6px;
         font-size: 20px;
@@ -36,15 +42,18 @@ const ThemeToggler = styled.button`
 `
 
 const Header = () => {
-    const [dark, setDark] = useState(false)
+    const [dark, setDark] = useState(localStorage.getItem("dark") === "true" ? true : false)
 
     useEffect(() => {
         if (dark != false) {
             document.querySelector("body").classList.add("active")
+            localStorage.setItem("dark", "true")
         } else {
             document.querySelector("body").classList.remove("active")
+            localStorage.setItem("dark", "false")
         }
     }, [dark])
+    
     return (
         <HeaderStyled>
             <Title>Where in the world?</Title>
