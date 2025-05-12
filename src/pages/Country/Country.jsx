@@ -204,7 +204,7 @@ const Country = () => {
               </ListContainer>
               <CountryBorderh2>Border Countries:</CountryBorderh2>
               <BorderContainer>
-                {country.borders ? country.borders.map((border) => <a key={border} href={`/country/${border}`}>{border}</a>) : "No borders"}
+                {country.borders ? country.borders.map((border) => <Link key={border} to={`/country/${border}`}>{border}</Link>) : "No borders"}
               </BorderContainer>
             </CointainerDesktop>
           </DataCointainer>
